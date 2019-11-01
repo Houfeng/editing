@@ -1,12 +1,11 @@
 import React from "react";
 import { model } from "mota";
-import { TextEditModel } from "./TextEditModel";
-import { BrChar } from "./Char";
-import { CharRender } from "./CharRender";
+import { EditorModel } from "./EditorModel";
+import { AtomRenderer } from "./AtomRenderer";
 
-@model(TextEditModel)
-export class TextEditor extends React.Component {
-  model: TextEditModel;
+@model(EditorModel)
+export class Editor extends React.Component {
+  model: EditorModel;
 
   shouldComponentUpdate() {
     return false;
@@ -38,19 +37,15 @@ export class TextEditor extends React.Component {
     this.input = ref;
   };
 
-  renderBr(char: BrChar) {
-    return <br key={char.id} />;
-  }
-
   renderText() {
     const { value, selection } = this.model;
     const elements = value.map((char, index) => {
-      if (char instanceof BrChar) return this.renderBr(char);
       return (
-        <CharRender
+        <AtomRenderer
           key={char.id}
           char={char}
-          selected={selection.contains(index)} />
+          selected={selection.contains(index)}
+        />
       );
     });
     if (selection.cursor > -1) {
@@ -60,14 +55,20 @@ export class TextEditor extends React.Component {
   }
 
   isPreventKey = (event: React.KeyboardEvent) => {
-    return [13, 8, 46].indexOf(event.keyCode) > -1;
+    return [13, 8, 46, 9, 37, 38, 39, 40].indexOf(event.keyCode) > -1;
   };
 
   onKeyDown = (event: React.KeyboardEvent) => {
+    console.log("onKeyDown", event.keyCode);
     if (!this.isPreventKey(event)) return;
     event.preventDefault();
     this.handleBackspaceKey(event);
     this.handleEnterKey(event);
+    this.handleTabKey(event);
+    this.handleLeftKey(event);
+    this.handleRightKey(event);
+    this.handleUpKey(event);
+    this.handleDownKey(event);
   };
 
   handleBackspaceKey(event: React.KeyboardEvent) {
@@ -78,6 +79,31 @@ export class TextEditor extends React.Component {
   handleEnterKey(event: React.KeyboardEvent) {
     if (event.keyCode !== 13) return;
     this.model.breakLine();
+  }
+
+  handleTabKey(event: React.KeyboardEvent) {
+    if (event.keyCode !== 9) return;
+    this.model.tab();
+  }
+
+  handleLeftKey(event: React.KeyboardEvent) {
+    if (event.keyCode !== 37) return;
+    this.model.moveCursor(-1);
+  }
+
+  handleRightKey(event: React.KeyboardEvent) {
+    if (event.keyCode !== 39) return;
+    this.model.moveCursor(1);
+  }
+
+  handleUpKey(event: React.KeyboardEvent) {
+    if (event.keyCode !== 38) return;
+    this.model.moveCursor(-1);
+  }
+
+  handleDownKey(event: React.KeyboardEvent) {
+    if (event.keyCode !== 40) return;
+    this.model.moveCursor(1);
   }
 
   renderInput() {
@@ -97,7 +123,7 @@ export class TextEditor extends React.Component {
 
   onEditorMouseDown = (event: React.MouseEvent) => {
     if (!this.input) return;
-    console.log('onEditorMouseDown');
+    console.log("onEditorMouseDown");
     event.preventDefault();
     this.input.focus();
   };
@@ -117,7 +143,7 @@ export class TextEditor extends React.Component {
 
   render() {
     (window as any).editModel = this.model;
-    console.log('editor render');
+    console.log("editor render");
     return (
       <div className="editor" onMouseDown={this.onEditorMouseDown}>
         {this.renderInner()}

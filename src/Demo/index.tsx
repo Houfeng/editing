@@ -1,6 +1,6 @@
 import "./index.less";
 import React from "react";
 import ReactDOM from "react-dom";
-import { TextEditor } from "../TextEditor";
+import { Editor } from "../Editor";
 
-ReactDOM.render(<TextEditor />, document.getElementById("root"));
+ReactDOM.render(<Editor />, document.getElementById("root"));
