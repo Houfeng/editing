@@ -1,0 +1,27 @@
+init:
+  - name: pkginfo
+
+dev:
+  - name: clean
+  - name: typescript
+  - name: webpack
+    entry: ./src/Demo/*.tsx
+    template: ./src/Demo/*.html
+    watch: true
+  - name: server
+  - name: browser-sync
+
+build:
+  - name: clean
+  - name: typescript
+  - name: webpack
+
+test:
+  - name: tslint
+
+publish:
+  - name: shell
+    script:
+      - dn test
+      - dn build
+      - npm pu

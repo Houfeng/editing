@@ -1,0 +1,19 @@
+.editor {
+  background: white;
+  border: 1px solid #ddd;
+
+  .inner {
+    font-size: 14px;
+    padding: 4px;
+    overflow: auto;
+
+    &:focus {
+      outline: none;
+    }
+
+    [contentEditable="true"] {
+      outline: none;
+    }
+
+  }
+}
