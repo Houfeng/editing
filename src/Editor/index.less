@@ -2,69 +2,66 @@
   position: relative;
   background: white;
   border: 1px solid #ddd;
-  user-select: none;
   padding: 2px 4px;
   overflow: auto;
+  user-select: none;
   font-family: monospace;
   cursor: text;
+  transform: translate3d(0, 0, 0);
 
-  .inner {
+  span {
     position: relative;
+    display: inline-block;
+  }
+
+  .cursor {
+    outline: none;
+    color: transparent;
+    caret-color: transparent;
+    text-shadow: 0 0 0 #000;
+    overflow: visible;
+
+    @keyframes blink {
+      0% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      display: inline-block;
+      overflow: hidden;
+      width: 0;
+      height: 100%;
+    }
 
     &:focus {
       outline: none;
     }
 
-    span {
-      position: relative;
-      display: inline-block;
-    }
-
-    .cursor {
-      outline: none;
-      color: transparent;
-      caret-color: transparent;
-      text-shadow: 0 0 0 #000;
+    &:focus::after {
+      position: absolute;
       overflow: visible;
-
-      @keyframes blink {
-        0% {
-          opacity: 0;
-        }
-
-        50% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-        }
-      }
-
-      &::before,
-      &::after {
-        content: "";
-        display: inline-block;
-        overflow: hidden;
-        width: 0;
-        height: 100%;
-      }
-
-      &:focus::after {
-        position: absolute;
-        overflow: visible;
-        top: 0;
-        right: -1px;
-        width: 1px;
-        background: black;
-        animation: blink .8s infinite;
-      }
+      top: 0;
+      right: -1px;
+      width: 2px;
+      background: black;
+      animation: blink .8s infinite;
+      transform: translate3d(0, 0, 0) scaleX(.6);
     }
+  }
 
-    .selected {
-      background-color: rgba(50, 150, 250, 0.4);
-    }
-
+  .selected {
+    background-color: rgba(50, 150, 250, 0.4);
   }
 
 }

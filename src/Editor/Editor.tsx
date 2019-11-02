@@ -32,28 +32,6 @@ export class Editor extends React.Component {
     this.composition = false;
   };
 
-  input: HTMLSpanElement;
-  onInputRef = (ref: HTMLSpanElement) => {
-    this.input = ref;
-  };
-
-  renderText() {
-    const { value, selection } = this.model;
-    const elements = value.map((char, index) => {
-      return (
-        <AtomRenderer
-          key={char.id}
-          char={char}
-          selected={selection.contains(index)}
-        />
-      );
-    });
-    if (selection.cursor > -1) {
-      elements.splice(selection.cursor, 0, this.renderInput());
-    }
-    return elements;
-  }
-
   isPreventKey = (event: React.KeyboardEvent) => {
     return [13, 8, 46, 9, 37, 38, 39, 40].indexOf(event.keyCode) > -1;
   };
@@ -98,27 +76,26 @@ export class Editor extends React.Component {
 
   handleUpKey(event: React.KeyboardEvent) {
     if (event.keyCode !== 38) return;
-    this.model.moveCursor(-1);
+    const rect = this.input.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top - rect.height / 2;
+    const target = document.elementFromPoint(x, y);
+    if (!target) return;
+    const { atomIndex } = target as any;
+    if (isNaN(atomIndex)) return;
+    this.model.selection.cursor = atomIndex;
   }
 
   handleDownKey(event: React.KeyboardEvent) {
     if (event.keyCode !== 40) return;
-    this.model.moveCursor(1);
-  }
-
-  renderInput() {
-    return (
-      <span
-        key="cursor"
-        className="cursor"
-        ref={this.onInputRef}
-        contentEditable={true}
-        onCompositionStart={this.onCompositionStart}
-        onCompositionEnd={this.onCompositionEnd}
-        onInput={this.onInput}
-        onKeyDown={this.onKeyDown}
-      />
-    );
+    const rect = this.input.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.bottom + rect.height / 2;
+    const target = document.elementFromPoint(x, y);
+    if (!target) return;
+    const { atomIndex } = target as any;
+    if (isNaN(atomIndex)) return;
+    this.model.selection.cursor = atomIndex;
   }
 
   onEditorMouseDown = (event: React.MouseEvent) => {
@@ -137,16 +114,59 @@ export class Editor extends React.Component {
     }
   }
 
-  renderInner() {
-    return <div className="inner">{this.renderText()}</div>;
+  renderText() {
+    const { value, selection } = this.model;
+    const elements = value.map((char, index) => {
+      return (
+        <AtomRenderer
+          key={char.id}
+          char={char}
+          index={index}
+          editorModel={this.model}
+        />
+      );
+    });
+    if (selection.cursor > -1) {
+      elements.splice(selection.cursor, 0, this.renderInput());
+    }
+    return elements;
   }
+
+  input: HTMLSpanElement;
+  onInputRef = (ref: HTMLSpanElement) => {
+    this.input = ref;
+  };
+
+  renderInput() {
+    return (
+      <span
+        key="cursor"
+        className="cursor"
+        ref={this.onInputRef}
+        contentEditable={true}
+        onCompositionStart={this.onCompositionStart}
+        onCompositionEnd={this.onCompositionEnd}
+        onInput={this.onInput}
+        onKeyDown={this.onKeyDown}
+      />
+    );
+  }
+
+  element: HTMLDivElement;
+  onElementRef = (ref: HTMLDivElement) => {
+    this.element = ref;
+  };
 
   render() {
     (window as any).editModel = this.model;
     console.log("editor render");
     return (
-      <div className="editor" onMouseDown={this.onEditorMouseDown}>
-        {this.renderInner()}
+      <div
+        className="editor"
+        ref={this.onElementRef}
+        onMouseDown={this.onEditorMouseDown}
+      >
+        {this.renderText()}
       </div>
     );
   }
