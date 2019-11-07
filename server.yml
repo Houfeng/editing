@@ -1,3 +1,4 @@
 proxy:
     rules: 
-      ^/api(.*): 'https://www.aliyun.com/'
+      ^/api(.*): 'https://www.aliyun.com/' 
+

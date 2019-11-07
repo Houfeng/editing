@@ -1,7 +1,11 @@
-import { Atom, BrAtom, SpaceAtom } from "./Atom";
+import { Atom } from "./Atom";
 import { Selection } from "./Selection";
+import { AtomBreakline } from "./AtomBreakline";
+import { AtomSpace } from "./AtomSpace";
+import { AtomChar } from "./AtomChar";
+import { AtomGroup } from "./AtomGroup";
 
-export class EditorModel {
+export class Document extends AtomGroup {
   value: Atom[] = [];
 
   selection = new Selection();
@@ -18,11 +22,14 @@ export class EditorModel {
   insertText = (text: string, index = this.selection.cursor) => {
     const atomList: Atom[] = [];
     text.split("").forEach(char => {
-      if (!char) atomList.push(new SpaceAtom());
-      else if (char === "\n") atomList.push(new BrAtom());
-      else if (char === "\t") atomList.push(new SpaceAtom(), new SpaceAtom());
+      if (char === ' ') atomList.push(new AtomSpace());
+      else if (char === "\n") atomList.push(new AtomBreakline());
+      else if (char === "\t") atomList.push(new AtomSpace(), new AtomSpace());
       else if (char === "\r") {
-      } else atomList.push(new Atom(char));
+        //none
+      } else {
+        atomList.push(new AtomChar(char));
+      }
     });
     this.insertAtoms(atomList, index);
   };
@@ -33,11 +40,11 @@ export class EditorModel {
   };
 
   tab = (index = this.selection.cursor) => {
-    this.insertAtoms([new SpaceAtom(), new SpaceAtom()], index);
+    this.insertAtoms([new AtomSpace(), new AtomSpace()], index);
   };
 
   breakLine = (index = this.selection.cursor) => {
-    this.insertAtom(new BrAtom(), index);
+    this.insertAtom(new AtomBreakline(), index);
   };
 
   moveCursor = (num = 1) => {
@@ -58,4 +65,10 @@ export class EditorModel {
   moveCursorToRight = () => {
     this.moveCursor(1);
   };
+
+  getCurrent = () => {
+    const index = this.selection.cursor;
+    return this.value[index] || this.value[this.value.length - 1];
+  }
+
 }

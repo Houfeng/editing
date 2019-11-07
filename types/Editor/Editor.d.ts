@@ -1,28 +1,16 @@
 import React from "react";
-import { EditorModel } from "./EditorModel";
+import { Document } from "./Document";
+import { Cursor } from "./Cursor";
 export declare class Editor extends React.Component {
-    model: EditorModel;
+    model: Document;
     shouldComponentUpdate(): boolean;
-    onInput: () => void;
-    composition: boolean;
-    onCompositionStart: () => void;
-    onCompositionEnd: () => void;
-    isPreventKey: (event: React.KeyboardEvent<Element>) => boolean;
-    onKeyDown: (event: React.KeyboardEvent<Element>) => void;
-    handleBackspaceKey(event: React.KeyboardEvent): void;
-    handleEnterKey(event: React.KeyboardEvent): void;
-    handleTabKey(event: React.KeyboardEvent): void;
-    handleLeftKey(event: React.KeyboardEvent): void;
-    handleRightKey(event: React.KeyboardEvent): void;
-    handleUpKey(event: React.KeyboardEvent): void;
-    handleDownKey(event: React.KeyboardEvent): void;
     onEditorMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
     componentDidUpdate(): void;
-    renderText(): JSX.Element[];
-    input: HTMLSpanElement;
-    onInputRef: (ref: HTMLSpanElement) => void;
-    renderInput(): JSX.Element;
+    renderAtoms(): string | number | boolean | {} | React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)>) | (new (props: any) => React.Component<any, any, any>)> | React.ReactNodeArray | React.ReactPortal | React.ReactNode[];
+    cursor: Cursor;
+    setCursor: (ref: Cursor) => Cursor;
+    renderCursor(): JSX.Element;
     element: HTMLDivElement;
-    onElementRef: (ref: HTMLDivElement) => void;
+    onRef: (ref: HTMLDivElement) => void;
     render(): JSX.Element;
 }

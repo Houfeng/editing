@@ -23,7 +23,7 @@
     "dn-middleware-tslint": "^1.1.3",
     "dn-middleware-typescript": "^2.0.8",
     "dn-middleware-webpack": "^1.11.5",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "@types/shortid": "0.0.29",
