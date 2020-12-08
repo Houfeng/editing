@@ -1,8 +1,10 @@
-import React from "react";
-import shortid from "shortid";
-import { IValue } from "./IValue";
 import { Atom } from "./Atom";
+import { IValue } from "./IValue";
+import React from "react";
+import { observable } from "mota";
+import shortid from "shortid";
 
+@observable
 export class AtomChar extends Atom {
   id = shortid();
   value: IValue = "";

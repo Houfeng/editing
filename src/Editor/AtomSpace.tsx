@@ -1,6 +1,8 @@
-import React from "react";
 import { AtomChar } from "./AtomChar";
+import React from "react";
+import { observable } from "mota";
 
+@observable
 export class AtomSpace extends AtomChar {
   value = " ";
   render() {

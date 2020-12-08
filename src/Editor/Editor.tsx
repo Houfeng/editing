@@ -1,15 +1,11 @@
+import { Cursor } from "./Cursor";
+import { Document } from "./Document";
 import React from "react";
 import { model } from "mota";
-import { Document } from "./Document";
-import { Cursor } from "./Cursor";
 
 @model(Document)
-export class Editor extends React.Component {
+export class Editor extends React.PureComponent {
   model: Document;
-
-  shouldComponentUpdate() {
-    return false;
-  }
 
   onEditorMouseDown = (event: React.MouseEvent) => {
     if (!this.cursor) return;
@@ -44,7 +40,7 @@ export class Editor extends React.Component {
   };
 
   render() {
-    (window as any).editModel = this.model;
+    (window as any).editor = this;
     return (
       <div
         className="editor"

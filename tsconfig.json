@@ -8,6 +8,8 @@
     "module": "esnext",
     "target": "es5",
     "moduleResolution": "node",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "noUnusedLocals": true,
     "esModuleInterop": true,

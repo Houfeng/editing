@@ -14,8 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.12.3",
-    "@types/react": "^16.9.3",
-    "@types/react-dom": "^16.9.3",
+    "@types/react": "^16.14.2",
+    "@types/react-dom": "^16.9.10",
     "dn-middleware-browser-sync": "^0.1.0",
     "dn-middleware-clean": "^1.0.2",
     "dn-middleware-copy": "^0.2.7",
@@ -23,13 +23,13 @@
     "dn-middleware-tslint": "^1.1.3",
     "dn-middleware-typescript": "^2.0.8",
     "dn-middleware-webpack": "^1.11.5",
-    "typescript": "^3.7.2"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "@types/shortid": "0.0.29",
-    "mota": "^3.5.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "mota": "^7.3.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "shortid": "^2.2.15"
   }
 }

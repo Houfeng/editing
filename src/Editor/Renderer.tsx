@@ -1,6 +1,6 @@
 import React from "react";
-import { model } from "mota";
 import ReactDOM from "react-dom";
+import { model } from "mota";
 
 export interface IRendererProps {
   model: any;
@@ -8,13 +8,9 @@ export interface IRendererProps {
 }
 
 @model
-export class Renderer extends React.Component<IRendererProps> {
+export class Renderer extends React.PureComponent<IRendererProps> {
 
   model: any;
-
-  shouldComponentUpdate() {
-    return false;
-  }
 
   componentDidMount() {
     this.model.element = ReactDOM.findDOMNode(this);

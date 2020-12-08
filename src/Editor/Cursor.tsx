@@ -1,18 +1,14 @@
+import { Document } from "./Document";
 import React from "react";
 import { model } from "mota";
-import { Document } from "./Document";
 export interface ICursorProps {
   model: Document;
 }
 
 @model
-export class Cursor extends React.Component<ICursorProps> {
+export class Cursor extends React.PureComponent<ICursorProps> {
 
   model: Document;
-
-  shouldComponentUpdate() {
-    return false;
-  }
 
   onInput = () => {
     if (!this.composition) {

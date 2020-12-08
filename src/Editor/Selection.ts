@@ -1,3 +1,6 @@
+import { observable } from "mota";
+
+@observable
 export class Selection {
   start = -1;
   end = -1;

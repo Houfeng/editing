@@ -1,8 +1,10 @@
-import React from "react";
-import shortid from "shortid";
-import { Renderer } from "./Renderer";
 import { IValue } from "./IValue";
+import React from "react";
+// import { Renderer } from "./Renderer";
+import { observable } from "mota";
+import shortid from "shortid";
 
+@observable
 export class Atom {
   id = shortid();
   value: IValue = null;
@@ -14,10 +16,10 @@ export class Atom {
   element: HTMLElement;
 
   wrapRender() {
-    const originRender = this.render.bind(this);
-    this.render = () => {
-      return <Renderer key={this.id} model={this} render={originRender} />;
-    };
+    // const originRender = this.render.bind(this);
+    // this.render = () => {
+    //   return <Renderer key={this.id} model={this} render={originRender} />;
+    // };
   }
 
   render(): React.ReactNode {

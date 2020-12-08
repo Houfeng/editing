@@ -1,6 +1,8 @@
 import { Atom } from "./Atom";
+import { observable } from "mota";
 import shortid from "shortid";
 
+@observable
 export class AtomGroup extends Atom {
   id = shortid();
   value: Atom[] = [];

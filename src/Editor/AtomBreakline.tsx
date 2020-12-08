@@ -1,7 +1,9 @@
-import React from "react";
 import { AtomChar } from "./AtomChar";
+import React from "react";
+import { observable } from "mota";
 
-export class AtomBreakline extends AtomChar {
+@observable
+export class AtomBreakLine extends AtomChar {
   value = "\n";
   render() {
     return <br key={this.id}

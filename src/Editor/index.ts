@@ -7,5 +7,5 @@ export * from "./Atom";
 export * from "./AtomGroup";
 export * from "./AtomChar";
 export * from "./AtomSpace";
-export * from "./AtomBreakline";
+export * from "./AtomBreakLine";
 export * from "./IValue";

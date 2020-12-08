@@ -1,10 +1,9 @@
-import React from "react";
-import { Document } from "./Document";
 import { Cursor } from "./Cursor";
-export declare class Editor extends React.Component {
+import { Document } from "./Document";
+import React from "react";
+export declare class Editor extends React.PureComponent {
     model: Document;
-    shouldComponentUpdate(): boolean;
-    onEditorMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    onEditorMouseDown: (event: React.MouseEvent) => void;
     componentDidUpdate(): void;
     renderAtoms(): string | number | boolean | {} | React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)>) | (new (props: any) => React.Component<any, any, any>)> | React.ReactNodeArray | React.ReactPortal | React.ReactNode[];
     cursor: Cursor;
